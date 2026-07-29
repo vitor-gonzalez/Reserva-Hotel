@@ -100,66 +100,105 @@ def cadastrar():
 def redefinir():
     if request.method == 'GET':
         return render_template('redefinir.html')
-    
+
     elif request.method == 'POST':
         email = request.form['emailredef']
+
         logger.info(
-            f'Pedido de redefiniçao de senha \nEmail: {email}'
+            f'Pedido de redefinição de senha\n'
+            f'Email: {email}'
         )
 
-    try:
         usuario = Usuarios.query.filter_by(email=email).first()
+
         if not usuario:
             logger.warning(
-                f'O email {email} nao existe'
+                f'O email {email} não existe.'
             )
-            erro = 'Erro. O email nao esta cadastrado'
-            return render_template('redefinir.html', erro=erro)
-        
+
+            return render_template('redefinir.html', erro='Erro. O email não está cadastrado.')
+
         token = secrets.token_urlsafe(32)
         expiracao = datetime.now() + timedelta(minutes=5)
 
-        registro = Recuperecao(usuario_id=usuario.id, token=token, expiracao=expiracao)
+        registro = Recuperecao(
+            usuario_id=usuario.id,
+            token=token,
+            expiracao=expiracao
+        )
+
         db.session.add(registro)
-        db.session.commit() 
+        db.session.commit()
 
         link = url_for(
-            "redefinirsenha",
+            'redefinirsenha',
             token=token,
             _external=True
-)    
+        )
 
         corpo_email = f"""
-        <p>Clique no link abaixo</p>
-        <p><a href="{link}">{link}</a></p>
+        <html>
+        <body>
+            <h2>Recuperação de senha</h2>
+
+            <p>Clique no link abaixo para redefinir sua senha:</p>
+
+            <p>
+                <a href="{link}">
+                    {link}
+                </a>
+            </p>
+
+            <p>Se você não solicitou esta alteração, ignore este e-mail.</p>
+        </body>
+        </html>
         """
+
         msg = Message()
-        msg['Subject'] = "Redefinir senha"
+        msg['Subject'] = 'Redefinir senha'
         msg['From'] = os.getenv("EMAIL")
         msg['To'] = usuario.email
+
         password = os.getenv("PASSWORD")
-        msg.add_header('Content-Type', 'text/html')
+
+        msg.add_header('Content-Type', 'text/html; charset=utf-8')
         msg.set_payload(corpo_email)
-        
 
-        s = smtplib.SMTP('smtp.gmail.com: 587')
-        s.starttls()
-        s.login(msg['From'], password)
-        s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+        try:
+            servidor = smtplib.SMTP("smtp.gmail.com", 587, timeout=20)
 
-        logger.info(
-            f'O token foi enviado para {usuario.email}'
-        )
-    
-        return render_template('redefinir.html', sucesso='Email enviado com sucesso!') 
-    
-    except Exception as e:
-        logger.error(
-            f"Erro ao enviar o email {e}"
-            
-        )
-        
-        return render_template('redefinir.html', erro = 'Erro ao enviar o email')
+            servidor.ehlo()
+            servidor.starttls()
+            servidor.ehlo()
+
+            servidor.login(msg['From'], password)
+
+            servidor.sendmail(
+                msg['From'],
+                msg['To'],
+                msg.as_string().encode('utf-8')
+            )
+
+            servidor.quit()
+
+            logger.info(
+                f'O token foi enviado para {usuario.email}'
+            )
+
+            return render_template(
+                'redefinir.html',
+                sucesso='Email enviado com sucesso!'
+            )
+
+        except Exception as e:
+            logger.error(
+                f'Erro ao enviar o email: {e}'
+            )
+
+            return render_template(
+                'redefinir.html',
+                erro='Erro ao enviar o email.'
+            )
         
 @app.route("/redefinir/<token>", methods=['GET', 'POST'])
 def redefinirsenha(token):
