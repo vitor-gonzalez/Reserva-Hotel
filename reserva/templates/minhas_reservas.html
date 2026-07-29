@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Minhas Reservas</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/minhas_reservas.css') }}"
+    />
+  </head>
+
+  <body>
+    <header>
+      <h1>Hotel Reservas</h1>
+
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('logout') }}">Sair</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <h2>Minhas Reservas</h2>
+
+      {% if dados %}
+
+      <div class="reservas">
+        {% for dado in dados %}
+
+        <div class="card">
+          <h3>Reserva #{{ dado.reserva.id }}</h3>
+
+          <div class="info">
+            <p>
+              <strong>Quarto:</strong>
+              {{ dado.quarto.numero }}
+            </p>
+
+            <p>
+              <strong>Tipo:</strong>
+              {{ dado.quarto.tipo }}
+            </p>
+
+            <p>
+              <strong>Entrada:</strong>
+              {{ dado.reserva.data_entrada }}
+            </p>
+
+            <p>
+              <strong>Saída:</strong>
+              {{ dado.reserva.data_saida }}
+            </p>
+
+            <p>
+              <strong>Valor da diária:</strong>
+              R$ {{ dado.quarto.valor }}
+            </p>
+          </div>
+
+          <form
+            action="{{ url_for('cancelar_reserva', id=dado.reserva.id) }}"
+            method="post"
+          >
+            <input
+              type="hidden"
+              name="reserva_id"
+              value="{{ dado.reserva.id }}"
+            />
+
+            <button class="cancelar">Cancelar Reserva</button>
+          </form>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      {% else %}
+
+      <div class="sem-reserva">
+        <h3>Você ainda não possui reservas.</h3>
+
+        <a class="voltar" href="{{ url_for('home') }}"> Fazer uma Reserva </a>
+      </div>
+
+      {% endif %}
+    </div>
+  </body>
+</html>

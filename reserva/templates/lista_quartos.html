@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Gerenciar Quartos</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/lista_quartos.css') }}"
+    />
+  </head>
+
+  <body>
+    <header>
+      <h1>Painel Administrativo</h1>
+
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('adicionar_quarto') }}">Novo Quarto</a>
+
+        <a href="{{ url_for('logout') }}">Sair</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <h2>Quartos Cadastrados</h2>
+
+      {% if quartos %}
+
+      <div class="quartos">
+        {% for quarto in quartos %}
+
+        <div class="card">
+          <div class="cabecalho-card">
+            <h3>Quarto {{ quarto.numero }}</h3>
+
+            <span class="status {{ quarto.status|lower }}">
+              {{ quarto.status }}
+            </span>
+          </div>
+
+          <div class="informacoes">
+            <p>
+              <strong>Tipo:</strong>
+              {{ quarto.tipo }}
+            </p>
+
+            <p>
+              <strong>Capacidade:</strong>
+              {{ quarto.capacidade }} pessoas
+            </p>
+
+            <p>
+              <strong>Diária:</strong>
+              R$ {{ quarto.valor }}
+            </p>
+          </div>
+
+          <div class="acoes">
+            <a
+              href="{{ url_for('editar_quarto', id=quarto.id) }}"
+              class="editar"
+            >
+              Editar
+            </a>
+
+            <form
+              action="{{ url_for('excluir_quarto', id=quarto.id) }}"
+              method="POST"
+            >
+              <button class="excluir">Excluir</button>
+            </form>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      {% else %}
+
+      <div class="vazio">
+        <h3>Nenhum quarto cadastrado.</h3>
+
+        <a href="{{ url_for('adicionar_quarto') }}" class="novo">
+          Cadastrar Primeiro Quarto
+        </a>
+      </div>
+
+      {% endif %}
+    </div>
+  </body>
+</html>

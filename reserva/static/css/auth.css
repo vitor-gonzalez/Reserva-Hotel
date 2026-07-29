@@ -1,0 +1,182 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+
+  padding: 20px;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 450px;
+
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 15px;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+
+  text-align: center;
+}
+
+.logo {
+  width: 80px;
+
+  margin-bottom: 20px;
+}
+
+.auth-container h1 {
+  color: #182848;
+
+  margin-bottom: 15px;
+
+  font-size: 34px;
+}
+
+.descricao {
+  color: #666;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  margin-bottom: 30px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+.campo {
+  text-align: left;
+
+  margin-bottom: 20px;
+}
+
+.campo label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: bold;
+
+  color: #444;
+}
+
+.campo input {
+  width: 100%;
+
+  padding: 12px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  transition: 0.3s;
+}
+
+.campo input:focus {
+  outline: none;
+
+  border-color: #4b6cb7;
+
+  box-shadow: 0 0 8px rgba(75, 108, 183, 0.35);
+}
+
+.botao {
+  width: 100%;
+
+  padding: 13px;
+
+  margin-top: 10px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #4b6cb7;
+
+  color: white;
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.botao:hover {
+  background: #3655a7;
+
+  transform: translateY(-2px);
+}
+
+.botao:active {
+  transform: translateY(0);
+}
+
+.links {
+  margin-top: 25px;
+}
+
+.links p {
+  margin-top: 12px;
+}
+
+.links a,
+.voltar a {
+  color: #4b6cb7;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.links a:hover,
+.voltar a:hover {
+  text-decoration: underline;
+}
+
+.erro {
+  margin-top: 20px;
+
+  color: #d62828;
+
+  font-weight: bold;
+}
+
+.sucesso {
+  margin-top: 20px;
+
+  color: #2e8b57;
+
+  font-weight: bold;
+}
+
+@media (max-width: 500px) {
+  .auth-container {
+    padding: 30px 25px;
+  }
+
+  .auth-container h1 {
+    font-size: 28px;
+  }
+}

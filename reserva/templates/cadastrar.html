@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="auth-container">
+      <h1>Criar Conta</h1>
+
+      <form action="" method="post">
+        <div class="campo">
+          <label>Nome</label>
+          <input type="text" name="nomeForm" required />
+        </div>
+
+        <div class="campo">
+          <label>CPF</label>
+          <input type="text" name="cpfForm" required />
+        </div>
+
+        <div class="campo">
+          <label>Email</label>
+          <input type="email" name="emailForm" required />
+        </div>
+
+        <div class="campo">
+          <label>Telefone</label>
+          <input type="text" name="telefoneForm" required />
+        </div>
+
+        <div class="campo">
+          <label>Senha</label>
+          <input type="password" name="senhaForm" required />
+        </div>
+
+        <input class="botao" type="submit" value="Cadastrar" />
+      </form>
+      <div class="links">
+        <p>
+          Já possui uma conta?
+          <a href="/">Entrar</a>
+        </p>
+
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

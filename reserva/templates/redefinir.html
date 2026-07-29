@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar Senha</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="auth-container">
+      <h1>Recuperar Senha</h1>
+
+      <p class="descricao">
+        Informe o e-mail utilizado no cadastro. Enviaremos um link para
+        redefinição da sua senha.
+      </p>
+
+      <form action="{{ url_for('redefinir') }}" method="post">
+        <div class="campo">
+          <label>E-mail</label>
+          <input
+            type="email"
+            name="emailredef"
+            placeholder="Digite seu e-mail"
+            required
+          />
+        </div>
+
+        <input class="botao" type="submit" value="Enviar Link" />
+      </form>
+
+      <div class="links">
+        <p class="voltar">
+          <a href="/"> Voltar para o Login</a>
+        </p>
+      </div>
+
+      {% if sucesso %}
+      <p class="sucesso">{{sucesso}}</p>
+      {% endif %} {% if erro %}
+      <p class="erro">{{ erro }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

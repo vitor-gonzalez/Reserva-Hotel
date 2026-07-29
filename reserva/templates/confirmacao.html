@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Confirmar Reserva</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/confirmacao.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Confirmar Reserva</h1>
+
+      <p class="subtitulo">
+        Confira todas as informações antes de finalizar sua reserva.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h2>Hóspede</h2>
+
+          <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+
+          <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+
+          <p><strong>E-mail:</strong> {{ usuario.email }}</p>
+
+          <p><strong>Telefone:</strong> {{ usuario.telefone }}</p>
+        </div>
+
+        <div class="card">
+          <h2>Quarto</h2>
+
+          <p><strong>Número:</strong> {{ quarto.numero }}</p>
+
+          <p><strong>Tipo:</strong> {{ quarto.tipo }}</p>
+
+          <p><strong>Capacidade:</strong> {{ quarto.capacidade }} pessoas</p>
+
+          <p><strong>Diária:</strong> R$ {{ quarto.valor }}</p>
+        </div>
+
+        <div class="card">
+          <h2>Reserva</h2>
+
+          <p><strong>Entrada:</strong> {{ entrada }}</p>
+
+          <p><strong>Saída:</strong> {{ saida }}</p>
+
+          <hr />
+
+          <h3>Valor Total</h3>
+
+          <div class="total">R$ {{ valor_total }}</div>
+        </div>
+      </div>
+
+      <form action="{{ url_for('reservar') }}" method="post">
+        <input type="hidden" name="quarto_id" value="{{ quarto.id }}" />
+
+        <input type="hidden" name="entrada" value="{{ entrada }}" />
+
+        <input type="hidden" name="saida" value="{{ saida }}" />
+
+        <button class="botao">Confirmar Reserva</button>
+      </form>
+    </div>
+  </body>
+</html>

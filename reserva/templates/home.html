@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel - Home</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/home.css') }}"
+    />
+  </head>
+
+  <body>
+    <header>
+      <h1>Hotel Reservas</h1>
+
+      <nav>
+        <a href="/minhas_reservas">Minhas Reservas</a>
+
+        {% if current_user.administrador %}
+        <a href="{{ url_for('adicionar_quarto') }}">Adicionar Quarto</a>
+        <a href="{{ url_for('lista_quartos') }}">Gerenciar Quartos</a>
+        {% endif %}
+
+        <a href="/logout">Sair</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <section class="pesquisa">
+        <h2>Pesquisar Quartos</h2>
+
+        <form action="/home" method="post">
+          <div class="campo">
+            <label>Data de Entrada</label>
+
+            <input type="date" name="entrada" required />
+          </div>
+
+          <div class="campo">
+            <label>Data de Saída</label>
+
+            <input type="date" name="saida" required />
+          </div>
+
+          <button class="botao">Pesquisar</button>
+        </form>
+
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+      </section>
+
+      {% if pesquisa %}
+
+      <section class="quartos">
+        {% if quarto %} {% for quartos in quarto %}
+
+        <div class="card">
+          <h3>Quarto {{ quartos.numero }}</h3>
+
+          <p><strong>Tipo:</strong> {{ quartos.tipo }}</p>
+
+          <p><strong>Valor:</strong> R$ {{ quartos.valor }}</p>
+
+          <p><strong>Capacidade:</strong> {{quartos.capacidade}} pessoas</p>
+
+          <form action="{{ url_for('confirmar') }}" method="post">
+            <input type="hidden" name="quarto_id" value="{{ quartos.id }}" />
+
+            <input type="hidden" name="entrada" value="{{ entrada }}" />
+
+            <input type="hidden" name="saida" value="{{ saida }}" />
+
+            <button class="botao">Reservar</button>
+          </form>
+        </div>
+
+        {% endfor %} {% else %}
+
+        <p class="erro">Nenhum quarto disponível para o período informado.</p>
+
+        {% endif %}
+      </section>
+
+      {% endif %}
+    </div>
+  </body>
+</html>

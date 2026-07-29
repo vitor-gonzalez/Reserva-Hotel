@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+  <body>
+    <div class="auth-container">
+      <h1>Login</h1>
+
+      <form action="" method="post">
+        <div class="campo">
+          <label>Email</label>
+          <input type="email" name="emailForm" />
+        </div>
+
+        <div class="campo">
+          <label>Senha</label>
+          <input type="password" name="senhaForm" />
+        </div>
+
+        <input class="botao" type="submit" value="Entrar" />
+      </form>
+      <div class="links">
+        <p><a href="/cadastrar">Criar conta</a></p>
+
+        <p><a href="/redefinir">Esqueci minha senha</a></p>
+      </div>
+
+      {% if falha %}
+      <p class="erro">{{ falha }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

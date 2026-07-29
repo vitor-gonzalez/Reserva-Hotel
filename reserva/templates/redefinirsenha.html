@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova Senha</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="auth-container">
+      <h1>Criar Nova Senha</h1>
+
+      <p class="descricao">
+        Digite sua nova senha e confirme-a para concluir a redefinição.
+      </p>
+
+      <form method="post">
+        <div class="campo">
+          <label>Nova Senha</label>
+          <input
+            type="password"
+            name="senhaRedef"
+            placeholder="Digite a nova senha"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label>Confirmar Senha</label>
+          <input
+            type="password"
+            name="senhaConf"
+            placeholder="Confirme a nova senha"
+            required
+          />
+        </div>
+
+        <input class="botao" type="submit" value="Redefinir Senha" />
+      </form>
+
+      {% if erro %}
+      <p class="erro">{{ erro }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

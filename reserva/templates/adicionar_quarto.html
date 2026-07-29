@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ titulo }}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/quarto.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>{{ titulo }}</h1>
+
+        <p class="subtitulo">Preencha as informações do quarto.</p>
+
+        <form method="POST">
+          <div class="campo">
+            <label>Número</label>
+
+            <input type="text" name="numero" required />
+          </div>
+
+          <div class="campo">
+            <label>Tipo</label>
+
+            <select name="tipo">
+              <option value="Solteiro">Solteiro</option>
+
+              <option value="Casal">Casal</option>
+
+              <option value="Luxo">Luxo</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label>Capacidade</label>
+
+            <input type="number" name="capacidade" required />
+          </div>
+
+          <div class="campo">
+            <label>Valor da Diária (R$)</label>
+
+            <input type="number" step="0.01" name="valor" required />
+          </div>
+
+          <div class="campo">
+            <label>Status</label>
+
+            <select name="status">
+              <option value="Disponivel">Disponível</option>
+
+              <option value="Manutencao">Manutenção</option>
+            </select>
+          </div>
+
+          {% if erro %}
+          <div class="mensagem-erro">{{ erro }}</div>
+          {% endif %}
+
+          <button class="botao">{{ funcao }}</button>
+        </form>
+
+        <a class="voltar" href="{{ url_for('lista_quartos') }}"> Voltar </a>
+      </div>
+    </div>
+  </body>
+</html>
